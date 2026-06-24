@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>资讯索引 · 爱游戏</title>
+  <style>
+    /* 基础重置与字体 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f0f6f9;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #1e2a35;
+      padding: 1.25rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 32px 32px 24px 24px;
+      box-shadow: 0 8px 28px rgba(0, 40, 60, 0.08);
+      overflow: hidden;
+      padding: 1.8rem 1.5rem 2.5rem;
+    }
+
+    /* 开场极简短句 */
+    .hero-snip {
+      margin-bottom: 2.2rem;
+    }
+    .hero-snip .label-tag {
+      display: inline-block;
+      background: #d4e8ed;
+      color: #155a6b;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 0.2rem 0.75rem;
+      border-radius: 30px;
+      margin-bottom: 0.6rem;
+    }
+    .hero-snip h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #0b3945;
+      margin-bottom: 0.4rem;
+    }
+    .hero-snip h1 small {
+      font-weight: 400;
+      font-size: 1rem;
+      color: #417e8b;
+      display: block;
+      margin-top: 0.2rem;
+    }
+    .hero-snip .opening-line {
+      font-size: 1.1rem;
+      color: #2a5c69;
+      padding: 0.8rem 0 0;
+      border-top: 2px solid #c5dfe5;
+      margin-top: 0.5rem;
+      max-width: 80%;
+    }
+
+    /* 承接段落：卡片式信息块 */
+    .bridge-card {
+      background: #f6fbfd;
+      border-radius: 24px;
+      padding: 1.6rem 1.4rem;
+      margin: 2rem 0 2.4rem;
+      border-left: 5px solid #3a929f;
+      box-shadow: 0 3px 12px rgba(58, 146, 159, 0.08);
+    }
+    .bridge-card p {
+      margin-bottom: 0.85rem;
+    }
+    .bridge-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 特点列表：网格卡片 */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin: 2.4rem 0 2rem;
+    }
+    @media (min-width: 540px) {
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .feature-item {
+      background: white;
+      border: 1px solid #dae9ee;
+      border-radius: 20px;
+      padding: 1.4rem 1.2rem 1.2rem;
+      transition: box-shadow 0.2s ease, transform 0.15s;
+      box-shadow: 0 2px 6px rgba(0, 40, 50, 0.02);
+    }
+    .feature-item:hover {
+      box-shadow: 0 6px 18px rgba(42, 130, 145, 0.10);
+      transform: translateY(-2px);
+    }
+    .feature-item h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #0a4b56;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .feature-item h3::before {
+      content: "▹";
+      color: #3a929f;
+      font-size: 1.3rem;
+      margin-right: 0.5rem;
+    }
+    .feature-item p {
+      font-size: 0.95rem;
+      color: #264f5a;
+    }
+
+    /* 场景 + 提示混合区 */
+    .mix-zone {
+      background: #e6f2f5;
+      border-radius: 28px;
+      padding: 1.5rem 1.5rem 1.8rem;
+      margin: 1.8rem 0 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mix-zone .tip-block {
+      background: white;
+      border-radius: 18px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .mix-zone .tip-block .emoji-badge {
+      background: #398a96;
+      color: white;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .mix-zone .tip-block .tip-text {
+      font-size: 0.95rem;
+      color: #1b4954;
+    }
+    .mix-zone .tip-block .tip-text strong {
+      color: #075769;
+    }
+
+    /* FAQ 摘要 (折叠简洁) */
+    .faq-summary {
+      margin: 2.4rem 0 1.8rem;
+      border-top: 1px dashed #bdd6dc;
+      padding-top: 1.6rem;
+    }
+    .faq-summary h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0f4f5d;
+      margin-bottom: 1rem;
+    }
+    .faq-item {
+      margin-bottom: 0.9rem;
+    }
+    .faq-item .q {
+      font-weight: 600;
+      color: #125f6d;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+    .faq-item .a {
+      font-size: 0.93rem;
+      color: #2f5e68;
+      padding-left: 1.2rem;
+      border-left: 3px solid #aacfd7;
+    }
+
+    /* 温和结尾 */
+    .gentle-footer {
+      margin-top: 2.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #d3e2e7;
+      text-align: left;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.8rem;
+    }
+    .gentle-footer .note {
+      font-size: 0.9rem;
+      color: #2d6572;
+      max-width: 70%;
+    }
+    .gentle-footer .credit {
+      font-size: 0.8rem;
+      color: #6e929b;
+    }
+
+    a {
+      color: #127382;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.1s, color 0.15s;
+      font-weight: 500;
+    }
+    a:hover {
+      border-bottom-color: #127382;
+      color: #0a4a55;
+    }
+
+    /* 移动端微调 */
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.3rem 1rem 2rem;
+        border-radius: 24px;
+      }
+      .hero-snip h1 {
+        font-size: 1.6rem;
+      }
+      .hero-snip .opening-line {
+        max-width: 100%;
+        font-size: 1rem;
+      }
+      .mix-zone .tip-block {
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .mix-zone .tip-block .emoji-badge {
+        margin-bottom: 0.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 开场极简短句 -->
+  <div class="hero-snip">
+    <span class="label-tag">▪ 资料索引</span>
+    <h1>
+      爱游戏
+      <small>从条目到脉络 · 信息整理手记</small>
+    </h1>
+    <div class="opening-line">
+      刚开始只是一份链接清单。后来变成了一组索引，一个安静的参考节点。
+    </div>
+  </div>
+
+  <!-- 承接段落：说明切入角度 (资料整理与索引) -->
+  <div class="bridge-card">
+    <p>把零散的游戏相关页面、社区讨论、工具站点整理成有结构的索引，这件事做了好几年。最初只是为了自己找资料方便，后来发现它们对其他人也有用——尤其是那些刚接触某个项目、希望快速了解背景的玩家。</p>
+    <p>这个网站就是这样一个整理结果：不追求覆盖所有内容，而是把经过筛选、稳定可靠的条目汇集到一起。如果你也习惯从<strong>资料分类</strong>和<strong>信息索引</strong>的角度理解游戏文化，或许会觉得这里顺手。</p>
+  </div>
+
+  <!-- 特点列表：网格卡片 -->
+  <div class="feature-grid">
+    <div class="feature-item">
+      <h3>按游戏/主题归类</h3>
+      <p>每个条目都经过简单归类，方便横向对比或纵向深挖。分类标签尽量直观，减少浏览时的认知负担。</p>
+    </div>
+    <div class="feature-item">
+      <h3>附带简短备注</h3>
+      <p>除了链接本身，通常有一两句话说明这个页面是什么、侧重什么。不废话，但也不让你点进去才发现不对。</p>
+    </div>
+    <div class="feature-item">
+      <h3>定期核对链接有效性</h3>
+      <p>每季度会过一遍收录的链接，失效的暂时移除或替换为镜像。索引的价值在于可靠，哪怕只是相对可靠。</p>
+    </div>
+    <div class="feature-item">
+      <h3>接受推荐与修正</h3>
+      <p>如果你发现某个分类缺了重要的站点，或者某个链接有更好的替代，可以通过页面的反馈渠道告诉我——索引是大家一起维护才有生命力。</p>
+    </div>
+  </div>
+
+  <!-- 场景 + 提示混合区 -->
+  <div class="mix-zone">
+    <div class="tip-block">
+      <span class="emoji-badge">🖊</span>
+      <span class="tip-text"><strong>使用场景举例</strong> — 想了解某款游戏的版本更新历史、模组工具链、社区常用讨论区？从这里出发，比漫无目的搜索快不少。</span>
+    </div>
+    <div class="tip-block">
+      <span class="emoji-badge">📌</span>
+      <span class="tip-text"><strong>一个小提示</strong> — 索引本身不存储游戏文件或侵权内容，只整理公开且合规的信息页面。请放心使用。</span>
+    </div>
+  </div>
+
+  <!-- FAQ 摘要 (只列两三个简明条目) -->
+  <div class="faq-summary">
+    <h2>常见疑问 · 简答</h2>
+    <div class="faq-item">
+      <span class="q">这个索引多久更新一次？</span>
+      <div class="a">链接和新增条目大约每月整理一次，重要活动或大型版本发布后会视情况补充。</div>
+    </div>
+    <div class="faq-item">
+      <span class="q">我可以提交自己整理的资源页吗？</span>
+      <div class="a">如果内容与索引分类相关、且符合基本的资料质量（非搬运、有原创整理），欢迎通过页面角落的邮箱提交。</div>
+    </div>
+  </div>
+
+  <!-- 温和结尾 + 必要的 a 标签 (自然嵌入句子) -->
+  <div class="gentle-footer">
+    <div class="note">
+      如果你希望从头浏览或收藏这个索引，可以直接使用 
+      <a href="https://hub-sports-igame.com">爱游戏</a> 
+      作为起点——整个站点就是围绕资料整理和条目索引展开的。
+    </div>
+    <div class="credit">
+      f143d86e7dfac1b6 · 页面版本 2025.05
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
